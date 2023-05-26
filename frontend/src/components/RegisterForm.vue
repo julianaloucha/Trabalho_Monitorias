@@ -1,4 +1,3 @@
-<!-- src/components/RegisterForm.vue -->
 <template>
     <div>
       <h2>Sign up</h2>

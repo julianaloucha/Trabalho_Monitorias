@@ -9,8 +9,8 @@
     <main>
       <login-form v-if="!loggedIn && !showRegister" @login-success="loginSuccess" @go-to-register="showRegister = true" />
       <register-form v-if="!loggedIn && showRegister" @register-success="loginSuccess" @go-to-login="showRegister = false" />
-      <div class="task-container" v-if="loggedIn">
-        <task-list ref="taskList" />
+      <div class="container" v-if="loggedIn">
+        <task-list ref="listMonitorias" />
       </div>
     </main>
   </div>
@@ -19,7 +19,7 @@
 <script>
 import LoginForm from "./components/LoginForm.vue";
 import RegisterForm from "./components/RegisterForm.vue";
-import TaskList from "./components/TaskList.vue";
+import TaskList from "./components/List.vue";
 
 export default {
   components: {
@@ -38,8 +38,8 @@ export default {
     this.loggedIn = true;
     this.$nextTick(() => {
       console.log("next Tick" );
-      this.$refs.taskList.loadTasks(userId);
-      this.$refs.taskList.loadAllMonitorias();
+      this.$refs.listMonitorias.loadUserMonitorias(userId);
+      this.$refs.listMonitorias.loadAllMonitorias();
     });
   },
   },
@@ -61,7 +61,7 @@ body {
   width: 100vw;
 }
 
-.task-container {
+.container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

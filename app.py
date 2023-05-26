@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from api.tasks import monitorias_blueprint
+from api.monitorias import monitorias_blueprint
 from api.users import users_blueprint
 
 app = Flask(__name__)

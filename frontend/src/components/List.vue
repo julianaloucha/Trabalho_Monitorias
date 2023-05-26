@@ -25,7 +25,7 @@
     </div>
     <div class="columnright">
       <h2>Oferecer Monitoria</h2>
-      <form @submit.prevent="addTask">
+      <form @submit.prevent="addMonitoria">
         <input type="text" v-model="disciplina" placeholder="Disciplina da monitoria" required />
         <input type="date" v-model="date" placeholder="Data da monitoria" required />
         <input type="time" v-model="time" placeholder="Horário da monitoria" required />
@@ -33,32 +33,32 @@
         <button type="submit">Adicionar</button>
       </form>
       <ul>
-        <li v-for="task in tasks" :key="task._id">
-          <div class="task-disciplina">
-            {{ task.disciplina }}
+        <li v-for="monitoria in monitorias" :key="monitoria._id">
+          <div class="monitoria-disciplina">
+            {{ monitoria.disciplina }}
           </div>
-          <div class="task-disciplina">
-            {{ task.date }}
+          <div class="monitoria-disciplina">
+            {{ monitoria.date }}
           </div>
-          <div class="task-disciplina">
-            {{ task.time }}
+          <div class="monitoria-disciplina">
+            {{ monitoria.time }}
           </div>
-          <div class="task-disciplina">
-            {{ task.place }}
+          <div class="monitoria-disciplina">
+            {{ monitoria.place }}
           </div>
-          <div class="task-actions">
-            <button @click="deleteTask(task._id)">Excluir</button>
-            <button @click="showUpdateTaskForm(task)">Atualizar</button>
+          <div class="actions">
+            <button @click="deleteMonitoria(monitoria._id)">Excluir</button>
+            <button @click="showUpdateForm(monitoria)">Atualizar</button>
           </div>
-          <div v-if="taskBeingEdited && taskBeingEdited._id === task._id" class="edit">
+          <div v-if="beingEdited && beingEdited._id === monitoria._id" class="edit">
             <h3>Editar Tarefa</h3>
-            <form @submit.prevent="updateTaskAndHideForm">
-              <input type="text" v-model="taskBeingEdited.disciplina" required />
-              <input type="date" v-model="taskBeingEdited.date" required />
-              <input type="time" v-model="taskBeingEdited.time" required />
-              <input type="text" v-model="taskBeingEdited.place" required />
+            <form @submit.prevent="updateAndHide">
+              <input type="text" v-model="beingEdited.disciplina" required />
+              <input type="date" v-model="beingEdited.date" required />
+              <input type="time" v-model="beingEdited.time" required />
+              <input type="text" v-model="beingEdited.place" required />
               <button type="submit">Salvar</button>
-              <button type="button" @click="taskBeingEdited = null">Cancelar</button>
+              <button type="button" @click="beingEdited = null">Cancelar</button>
             </form>
           </div>
         </li>
@@ -74,52 +74,52 @@ import { getTasks, createTask, updateTask, deleteTask, getAllMonitorias } from "
 export default {
   data() {
     return {
-      tasks: [],
+      monitorias: [],
       allMonitorias: [],
       disciplina: "",
       date: "",
       time: "",
       place: "",
-      taskBeingEdited: null,
+      beingEdited: null,
       userId: null,
     };
   },
   methods: {
-    async loadTasks(userId) {
+    async loadUserMonitorias(userId) {
       this.userId = userId;
-      this.tasks = await getTasks(userId);
+      this.monitorias = await getTasks(userId);
     },
     async loadAllMonitorias() {
       console.log("allMonitorias: " )
       this.allMonitorias = await getAllMonitorias();
     },
-    async addTask() {
-      const task = {
+    async addMonitoria() {
+      const monitoria = {
         disciplina: this.disciplina,
         date: this.date,
         time: this.time,
         place: this.place,
         done: false,
       };
-      const createdTask = await createTask(task, this.userId);
-      this.tasks.push(createdTask);
+      const created = await createTask(monitoria, this.userId);
+      this.monitorias.push(created);
       this.disciplina = "";
       this.date = "";
       this.time = "";
       this.place = "";
       this.loadAllMonitorias();
     },
-    async deleteTask(taskId) {
-      await deleteTask(taskId);
-      this.tasks = this.tasks.filter((task) => task._id !== taskId);
+    async deleteMonitoria(monitoriaId) {
+      await deleteTask(monitoriaId);
+      this.monitorias = this.monitorias.filter((monitoria) => monitoria._id !== monitoriaId);
       this.loadAllMonitorias();
     },
-    showUpdateTaskForm(task) {
-      this.taskBeingEdited = task;
+    showUpdateForm(monitoria) {
+      this.beingEdited = monitoria;
   },
-    async updateTaskAndHideForm() {
-      await updateTask(this.taskBeingEdited._id, this.taskBeingEdited);
-      this.taskBeingEdited = null;
+    async updateAndHide() {
+      await updateTask(this.beingEdited._id, this.beingEdited);
+      this.beingEdited = null;
       this.loadAllMonitorias();
   },
   },
@@ -209,12 +209,12 @@ li {
   flex-basis: 10%; /* faz com que a task ocupe um terço da largura total, descontando a margem */
 }
 
-.task-disciplina {
+.monitoria-disciplina {
   margin-bottom: 0.1rem;
   align-items: center;
 }
 
-.task-actions {
+.actions {
   display: flex;   
   flex-direction: row;  
   justify-content: center; /* Centraliza os botões */
