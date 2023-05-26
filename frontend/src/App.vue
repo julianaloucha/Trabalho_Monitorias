@@ -5,27 +5,28 @@
   <div id="app">
     <header>
       <img alt="Vue logo" src="./monitorias_facamp.jpg" width="180">
+      <button class="sair" @click="refreshPage">Sair</button>
     </header>
     <main>
-      <login-form v-if="!loggedIn && !showRegister" @login-success="loginSuccess" @go-to-register="showRegister = true" />
-      <register-form v-if="!loggedIn && showRegister" @register-success="loginSuccess" @go-to-login="showRegister = false" />
+      <login v-if="!loggedIn && !showRegister" @login-success="loginSuccess" @go-to-register="showRegister = true" />
+      <sign-up v-if="!loggedIn && showRegister" @register-success="loginSuccess" @go-to-login="showRegister = false" />
       <div class="container" v-if="loggedIn">
-        <task-list ref="listMonitorias" />
+        <list ref="listMonitorias" />
       </div>
     </main>
   </div>
 </template>
 
 <script>
-import LoginForm from "./components/Login.vue";
-import RegisterForm from "./components/SignUp.vue";
-import TaskList from "./components/List.vue";
+import Login from "./components/Login.vue";
+import SignUp from "./components/SignUp.vue";
+import List from "./components/List.vue";
 
 export default {
   components: {
-    LoginForm,
-    RegisterForm,
-    TaskList,
+    Login,
+    SignUp,
+    List,
   },
   data() {
     return {
@@ -42,6 +43,9 @@ export default {
       this.$refs.listMonitorias.loadAllMonitorias();
     });
   },
+    refreshPage() {
+      window.location.reload();
+    },
   },
 };
 </script>
@@ -51,6 +55,15 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+.sair {
+  background-color: white;
+  color: #103c5c;
+  margin-right: 2rem;
+  padding: 0.5rem;
+  border-radius: 0.7rem;
+  font-weight: bolder;
 }
 
 body {
@@ -74,12 +87,12 @@ body {
 #app {
   display: flex;
   flex-direction: column;
-  align-items: center; /* modificado de center para flex-start */
+  align-items: center;
 }
 
 header {
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   width: 100vw;
   background-color: #103c5c;
@@ -100,10 +113,10 @@ h1 {
 main {
   display: flex;
   flex-direction: column;
-  align-items: certer; /* modificado de center para flex-start */
+  align-items: certer;
   width: 100%;
   padding: 1rem;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
 }
 
 </style>
