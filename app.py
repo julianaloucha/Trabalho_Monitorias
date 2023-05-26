@@ -6,7 +6,6 @@ from api.users import users_blueprint
 app = Flask(__name__)
 CORS(app)
 
-# Registra o blueprint do módulo tasks
 app.register_blueprint(monitorias_blueprint, url_prefix='/api')
 app.register_blueprint(users_blueprint, url_prefix='/api')
 

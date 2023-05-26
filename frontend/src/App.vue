@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import LoginForm from "./components/LoginForm.vue";
-import RegisterForm from "./components/RegisterForm.vue";
+import LoginForm from "./components/Login.vue";
+import RegisterForm from "./components/SignUp.vue";
 import TaskList from "./components/List.vue";
 
 export default {

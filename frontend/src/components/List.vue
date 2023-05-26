@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { getTasks, createTask, updateTask, deleteTask, getAllMonitorias } from "../api";
+import { getMonitorias, createMonitoria, updateMonitoria, deleteMonitoria, getAllMonitorias } from "../api";
 
 export default {
   data() {
@@ -87,7 +87,7 @@ export default {
   methods: {
     async loadUserMonitorias(userId) {
       this.userId = userId;
-      this.monitorias = await getTasks(userId);
+      this.monitorias = await getMonitorias(userId);
     },
     async loadAllMonitorias() {
       console.log("allMonitorias: " )
@@ -101,7 +101,7 @@ export default {
         place: this.place,
         done: false,
       };
-      const created = await createTask(monitoria, this.userId);
+      const created = await createMonitoria(monitoria, this.userId);
       this.monitorias.push(created);
       this.disciplina = "";
       this.date = "";
@@ -110,7 +110,7 @@ export default {
       this.loadAllMonitorias();
     },
     async deleteMonitoria(monitoriaId) {
-      await deleteTask(monitoriaId);
+      await deleteMonitoria(monitoriaId);
       this.monitorias = this.monitorias.filter((monitoria) => monitoria._id !== monitoriaId);
       this.loadAllMonitorias();
     },
@@ -118,7 +118,7 @@ export default {
       this.beingEdited = monitoria;
   },
     async updateAndHide() {
-      await updateTask(this.beingEdited._id, this.beingEdited);
+      await updateMonitoria(this.beingEdited._id, this.beingEdited);
       this.beingEdited = null;
       this.loadAllMonitorias();
   },
@@ -126,7 +126,7 @@ export default {
 };
 </script>
 
-<!-- Add your scoped styles here -->
+
 
   
 <style scoped>
@@ -138,19 +138,19 @@ div {
   display: flex;
   flex-direction: column;
   align-items: left;
-  padding: 0.2rem;   /* aumentado de 1rem para 2rem */
+  padding: 0.2rem; 
   font-family: Arial, sans-serif;
   width: 100%;
 }
 
 h2, h3 {
   color: #333;
-  margin-bottom: 1rem;  /* adicionado para dar espaço entre o título e o formulário abaixo */
+  margin-bottom: 1rem;
 }
 
 form {
   display: flex;
-  flex-direction: column; /* Adiciona isso para tornar o formulário de edição vertical */
+  flex-direction: column;
   width: 75%;
   margin-bottom: 1rem;
 }
@@ -158,15 +158,15 @@ form {
 input {
   flex-grow: 1;
   padding: 0.5rem;
-  margin-bottom: 0.5rem; /* Adiciona isso para dar espaço entre os elementos do formulário */
+  margin-bottom: 0.5rem;
   border: none;
   border-radius: 5px;
 }
 
 input {
   flex-grow: 1;
-  padding: 0.5rem 0.5rem; /* Adicione um pouco mais de padding vertical */
-  margin-bottom: 0.5rem; /* Adiciona isso para dar espaço entre os elementos do formulário */
+  padding: 0.5rem 0.5rem;
+  margin-bottom: 0.5rem;
   border: 3px solid #ccc;
   border-radius: 5px;
 }
@@ -194,7 +194,7 @@ ul {
   flex-wrap: wrap;
   padding: 0;
   justify-content: start;
-  align-items: flex-start; /* adicione esta linha */
+  align-items: flex-start;
   width: 100%;
   gap: 1rem;
 }
@@ -206,7 +206,7 @@ li {
   padding: 0px;
   border-radius: 5px;
   margin-bottom: 1px;
-  flex-basis: 10%; /* faz com que a task ocupe um terço da largura total, descontando a margem */
+  flex-basis: 10%; 
 }
 
 .monitoria-disciplina {
@@ -217,12 +217,12 @@ li {
 .actions {
   display: flex;   
   flex-direction: row;  
-  justify-content: center; /* Centraliza os botões */
+  justify-content: center;
   gap: 0.5rem;  
 }
 
 li:nth-child(3n) {
-  margin-right: 0; /* Remove a margem direita da terceira task de cada linha para evitar espaçamento extra no final da linha */
+  margin-right: 0;
 }
 
 li:nth-child(odd) {

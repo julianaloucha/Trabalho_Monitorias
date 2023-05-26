@@ -9,8 +9,8 @@ async function fetchData(url, options) {
   return response.json();
 }
 
-export async function getTasks(userId) {
-  return fetchData(`${API_URL}/tasks/${userId}`);
+export async function getMonitorias(userId) {
+  return fetchData(`${API_URL}/monitorias/${userId}`);
 }
 
 export async function getAllMonitorias() {
@@ -23,30 +23,30 @@ export async function getAllMonitorias() {
   });
 }
 
-export async function createTask(task, userId) {
-  task.user_id = userId;  // Adicione o user_id à tarefa
-  return fetchData(`${API_URL}/tasks`, {
+export async function createMonitoria(monitoria, userId) {
+  monitoria.user_id = userId;  // Adicione o user_id à tarefa
+  return fetchData(`${API_URL}/monitorias`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(task),
+    body: JSON.stringify(monitoria),
   });
 }
 
 
-export async function updateTask(taskId, task) {
-  return fetchData(`${API_URL}/tasks/${taskId}`, {
+export async function updateMonitoria(monitoriaId, monitoria) {
+  return fetchData(`${API_URL}/monitorias/${monitoriaId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(task),
+    body: JSON.stringify(monitoria),
   });
 }
 
-export async function deleteTask(taskId) {
-  return fetchData(`${API_URL}/tasks/${taskId}`, {
+export async function deleteMonitoria(monitoriaId) {
+  return fetchData(`${API_URL}/monitorias/${monitoriaId}`, {
     method: "DELETE",
   });
 }
