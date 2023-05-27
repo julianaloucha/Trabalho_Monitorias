@@ -18,7 +18,7 @@ Aplicação web simples de lista de tarefas (TODO) desenvolvida como projeto da 
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/julianaloucha/monitoriasfacamp.git
+git clone https://github.com/julianaloucha/Trabalho_Monitorias.git
 cd monitoriasfacamp
 ```
 
